@@ -1,0 +1,36 @@
+{
+  "name": "@xogumon/async-replace",
+  "version": "1.0.0",
+  "description": "it's like \"string\".replace() with promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xogumon/async-replace.git"
+  },
+  "keywords": [
+    "async",
+    "replace",
+    "promise",
+    "string",
+    "javascript",
+    "async-replace",
+    "regexp",
+    "regexp-replace"
+  ],
+  "author": {
+    "name": "Valdir Ronis",
+    "email": "ronis@xogum.net",
+    "url": "https://github.com/xogumon"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xogumon/async-replace/issues"
+  },
+  "homepage": "https://github.com/xogumon/async-replace#readme",
+  "devDependencies": {
+    "jest": "^29.0.1"
+  }
+}
