@@ -1,14 +1,18 @@
 {
   "name": "@xogumon/async-replace",
-  "version": "1.0.1",
-  "description": "It's useful for replacing text in a string with a promise that returns a string.",
+  "version": "1.0.2",
+  "description": "It's useful for replacing text in a string with a promise.",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "index.min.js"
   ],
+  "types": "types/index.d.ts",
   "scripts": {
-    "test": "jest",
-    "minify": "uglifyjs --compress --mangle --output index.min.js index.js"
+    "build:min": "uglifyjs --compress --mangle --output index.min.js index.js",
+    "build:dts": "tsc",
+    "build": "npm run build:min && npm run build:dts",
+    "test": "jest"
   },
   "keywords": [
     "async",
@@ -35,6 +39,7 @@
   },
   "devDependencies": {
     "jest": "^29.0.1",
+    "typescript": "^4.8.2",
     "uglify-js": "^3.17.0"
   },
   "publishConfig": {
