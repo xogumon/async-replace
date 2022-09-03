@@ -25,9 +25,8 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-          access: public
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -45,6 +44,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@xogumon"
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
