@@ -38,7 +38,7 @@
     "uglify-js": "^3.17.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@xogumon:registry": "https://npm.pkg.github.com"
   },
   "license": "MIT"
 }
