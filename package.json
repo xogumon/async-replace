@@ -13,7 +13,7 @@
     "build:min": "uglifyjs --compress --mangle --output index.min.js index.js",
     "build:dts": "tsc",
     "build": "npm run build:min && npm run build:dts",
-    "test": "jest test --coverage --verbose"
+    "test": "jest test"
   },
   "keywords": [
     "async",

@@ -82,6 +82,51 @@ describe("Replacement object: search is a RegExp", () => {
     });
     expect(result).toBe("Hello, 123!");
   });
+
+  it("should replace with a function that returns a match", async () => {
+    const result = await asyncReplace("Hello, world!", {
+      search: /world/,
+      replace: (match) => match.toUpperCase(),
+    });
+    expect(result).toBe("Hello, WORLD!");
+  });
+
+  it("should replace with a function that returns a Promise that resolves to a match", async () => {
+    const result = await asyncReplace("Hello, world!", {
+      search: /world/,
+      replace: (match) => Promise.resolve(match.toUpperCase()),
+    });
+    expect(result).toBe("Hello, WORLD!");
+  });
+
+  it("should replace with a function that returns a match and a capture group", async () => {
+    const result = await asyncReplace("Hello, world!", {
+      search: /world(!)/,
+      replace: (match, capture) => {
+        return match.toUpperCase() + capture;
+      },
+    });
+    expect(result).toBe("Hello, WORLD!!");
+  });
+
+  it("should replace with a function that returns a Promise that resolves to a match and a capture group", async () => {
+    const result = await asyncReplace("Hello, world!", {
+      search: /world(!)/,
+      replace: (match, capture) =>
+        Promise.resolve(match.toUpperCase() + capture),
+    });
+    expect(result).toBe("Hello, WORLD!!");
+  });
+
+  it("should replace with a function that returns a match and multiple capture groups", async () => {
+    const result = await asyncReplace("Hello, world!", {
+      search: /(Hell)o, (world)!/,
+      replace: (match, capture1, capture2) => {
+        return match.toUpperCase() + " " + capture1 + capture2;
+      },
+    });
+    expect(result).toBe("HELLO, WORLD! Hellworld");
+  });
 });
 
 describe("Array of replacement objects: search is a string", () => {
