@@ -127,6 +127,17 @@ describe("Replacement object: search is a RegExp", () => {
     });
     expect(result).toBe("HELLO, WORLD! Hellworld");
   });
+
+  it("should replace with a function that returns a Promise that resolves to a multiple matches", async () => {
+    const result = await asyncReplace("Hello, world! Hellx, universe!", {
+      search: /Hell([a-z]+)/g,
+      replace: (match, capture1) => {
+        console.log(capture1);
+        return Promise.resolve(match.toUpperCase() + "_" + capture1);
+      },
+    });
+    expect(result).toBe("HELLO_o, world! HELLX_x, universe!");
+  });
 });
 
 describe("Array of replacement objects: search is a string", () => {

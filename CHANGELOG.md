@@ -9,6 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Improved documentation and examples
 - Improved type definitions for TypeScript users
 
+## [1.0.4] - 2022-09-03
+
+### Fixed
+
+- Old method of getting the matched values from the `RegExp` object was not working perfectly. Now it uses the `String.prototype.replace` method to get the matched values. I also added a test to make sure it works as expected.
+
+### Notes
+
+- I know what you're thinking. Three versions in one day? Well I'm not sure if I should release a new version for this fix. But I think it's better to release a new version to make sure the package is working as expected.
+
+### Thanks
+
+- Jest for the test runner, I love it!
+
 ## [1.0.3] - 2022-09-03
 
 ### Added

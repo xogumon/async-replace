@@ -4,7 +4,9 @@ It's useful for replacing text in a string with a promise/async function.
 
 ---
 
-![npm](https://img.shields.io/npm/v/@xogumon/async-replace) ![GitHub Release Date](https://img.shields.io/github/release-date/xogumon/async-replace) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@xogumon/async-replace?color=blueviolet) ![GitHub](https://img.shields.io/github/license/xogumon/async-replace)
+![npm](https://img.shields.io/npm/v/@xogumon/async-replace) ![GitHub Release Date](https://img.shields.io/github/release-date/xogumon/async-replace) ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@xogumon/async-replace?color=blueviolet) ![GitHub](https://img.shields.io/github/license/xogumon/async-replace?color=violet) ![GitHub last commit](https://img.shields.io/github/last-commit/xogumon/async-replace?color=orange) ![GitHub issues](https://img.shields.io/github/issues/xogumon/async-replace?color=red) ![GitHub pull requests](https://img.shields.io/github/issues-pr/xogumon/async-replace?color=green)
+
+---
 
 ## Installation
 
@@ -15,15 +17,6 @@ npm install @xogumon/async-replace --save # or yarn add @xogumon/async-replace
 ## Compatibility
 
 This package is compatible with Node.js and browsers (with support for `Promise`).
-
-## CDNs (for browsers)
-
-You can use this package in your browser using [unpkg](https://unpkg.com/@xogumon/async-replace/index.min.js) or [jsdelivr](https://www.jsdelivr.com/package/npm/@xogumon/async-replace) cdn services.
-
-```html
-<script src="https://unpkg.com/@xogumon/async-replace/index.min.js"></script>
-<!-- or https://cdn.jsdelivr.net/npm/@xogumon/async-replace/index.min.js -->
-```
 
 ## Usage (Node.js)
 
@@ -104,6 +97,15 @@ npm test # or yarn test
 ## Test (Browser)
 
 You can test this package online in [JSFiddle](https://jsfiddle.net/xogum/sm4709hz/).
+
+## CDNs (for browsers)
+
+You can use this package in your browser using [unpkg](https://unpkg.com/@xogumon/async-replace/index.min.js) or [jsdelivr](https://www.jsdelivr.com/package/npm/@xogumon/async-replace) cdn services.
+
+```html
+<script src="https://unpkg.com/@xogumon/async-replace/index.min.js"></script>
+<!-- or https://cdn.jsdelivr.net/npm/@xogumon/async-replace/index.min.js -->
+```
 
 ## API
 

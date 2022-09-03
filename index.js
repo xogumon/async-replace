@@ -9,23 +9,34 @@ async function asyncReplace(str, obj, debug = false) {
       throw new Error("First argument must be a string");
     if (obj !== null && !Array.isArray(obj) && typeof obj === "object") {
       const { search, replace } = obj;
-      const matches = new RegExp(search).exec(str);
-      const match = matches.find((e) => e);
-      if (match) {
+      const matches = [];
+      const regex = new RegExp(search);
+      str.replace(regex, (...values) => {
+        matches.push({
+          match: values[0],
+          values,
+        });
+        return values[0];
+      });
+      if (matches.length === 0) {
+        debugLog({
+          message: "No matches found",
+          value: search,
+        });
+      }
+      for (const match of matches) {
+        const { match: matched, values } = match;
         const replaceValue =
           typeof replace === "function"
-            ? await replace(...matches)
+            ? await replace(...values)
             : replace instanceof Promise
             ? await replace
             : replace;
-        const result = str.replace(search, replaceValue);
-        debugLog({ message: "Match found", value: match });
+        str = str.replace(matched, replaceValue);
+        debugLog({ message: "Match found", value: matched });
         debugLog({ message: "Replace value", value: replaceValue });
-        return result;
-      } else {
-        debugLog({ message: "No match found", value: search });
-        return str;
       }
+      return str;
     } else if (Array.isArray(obj)) {
       for (const replacements of obj) {
         str = await asyncReplace(str, replacements);
