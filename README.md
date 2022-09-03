@@ -1,6 +1,6 @@
 # @xogumon/async-replace
 
-It's useful for replacing text in a string with a promise that returns a string.
+It's useful for replacing text in a string with a promise/async function.
 
 ## Installation
 

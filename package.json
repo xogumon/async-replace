@@ -1,7 +1,7 @@
 {
   "name": "@xogumon/async-replace",
   "version": "1.0.2",
-  "description": "It's useful for replacing text in a string with a promise.",
+  "description": "It's useful for replacing text in a string with a promise/async function.",
   "main": "index.js",
   "files": [
     "index.js",
