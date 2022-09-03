@@ -1,4 +1,4 @@
-# @xogumon/async-replace
+# async-replace
 
 It's useful for replacing text in a string with a promise/async function.
 
@@ -75,4 +75,4 @@ If `true`, it will log the `search` and `replace` results and any error that occ
 
 ## License
 
-MIT © [Valdir Ronis](https://github.com/xogumon)
+MIT © [Valdir "xogum" Ronis](https://github.com/xogumon)
