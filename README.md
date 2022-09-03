@@ -71,7 +71,7 @@ The search and replace pairs. Use an array of objects with the `search` and `rep
 
 Type: `boolean`
 
-If `true`, it will log the `search` and `replace` results and the any errors that occur.
+If `true`, it will log the `search` and `replace` results and any error that occurs.
 
 ## License
 
