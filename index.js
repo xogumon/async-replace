@@ -1,67 +1,70 @@
-module.exports = async function asyncReplace(
-  string,
-  searchReplaces,
-  debug = false
-) {
+async function asyncReplace(str, obj, debug = false) {
+  function debugLog({ message, value }, level = "log") {
+    if (debug) {
+      console[level](`[asyncReplace] ${message}: ${value}`);
+    }
+  }
   try {
-    if (typeof string !== "string")
-      throw new Error('"string" is not a string type');
-    if (!searchReplaces || typeof searchReplaces !== "object")
-      throw new Error(
-        '"searchReplaces" must be an object with search and replace keys'
-      );
-    if (typeof searchReplaces === "object" && !Array.isArray(searchReplaces)) {
-      const { search, replace } = searchReplaces;
-      if (typeof search === "string" || search instanceof RegExp) {
-        if (search instanceof RegExp) {
-          if (!search.test(string))
-            throw new Error(`No match for ${search.toString()}`);
-        } else {
-          if (!string.includes(search))
-            throw new Error(`No match found: ${search}`);
+    if (typeof str !== "string")
+      throw new Error("First argument must be a string");
+    if (obj !== null && !Array.isArray(obj) && typeof obj === "object") {
+      const { search, replace } = obj;
+      if (
+        typeof search === "number" ||
+        typeof search === "string" ||
+        search instanceof RegExp
+      ) {
+        if (search instanceof RegExp && !search.test(str)) {
+          throw new Error(`No match for "${search.toString()}"`);
+        } else if (!search instanceof RegExp && !str.includes(search)) {
+          throw new Error(`No match for "${search}"`);
         }
         if (
-          typeof replace === "string" ||
-          typeof replace === "function" ||
-          typeof replace === "number"
-        ) {
-          if (
-            typeof replace === "function" &&
+          (typeof replace === "function" &&
             typeof replace() === "object" &&
             typeof replace().then === "function" &&
-            typeof replace().catch === "function"
-          ) {
-            const result = await replace();
-            return string.replace(search, result);
-          } else {
-            return string.replace(search, replace);
-          }
-        } else if (
-          replace !== null &&
-          typeof replace === "object" &&
-          typeof replace.then === "function" &&
-          typeof replace.catch === "function"
+            typeof replace().catch === "function") ||
+          (replace !== null &&
+            typeof replace === "object" &&
+            typeof replace.then === "function" &&
+            typeof replace.catch === "function")
         ) {
-          const result = await replace;
-          return string.replace(search, result);
-        } else {
-          throw new Error(
-            `Invalid replace type: "${typeof replace}" (must be string, number, function, or promise)`
-          );
+          const result =
+            typeof replace === "function" ? await replace() : await replace;
+          debugLog({ message: "Match", value: search }, "info");
+          debugLog({ message: "Result", value: result }, "info");
+          return str.replace(search, result);
         }
+        debugLog({ message: "Match", value: search }, "info");
+        debugLog({ message: "Result", value: replace }, "info");
+        return str.replace(search, replace);
       } else {
-        throw new Error('Invalid "searchReplaces" object');
+        throw new Error('"search" must be a string, number, or RegExp');
       }
-    } else if (Array.isArray(searchReplaces)) {
-      for (const replacements of searchReplaces) {
-        string = await asyncReplace(string, replacements);
+    } else if (Array.isArray(obj)) {
+      for (const replacements of obj) {
+        str = await asyncReplace(str, replacements);
       }
-      return string;
+      return str;
     } else {
-      throw new Error('Invalid "searchReplaces" value');
+      throw new Error(
+        "Second argument must be an object or an array of objects"
+      );
     }
   } catch (e) {
-    if (debug) console.error(e);
-    return string;
+    if (e instanceof Error) {
+      debugLog({ message: "Error", value: e.message }, "error");
+    } else {
+      debugLog({ message: "Error", value: e }, "error");
+    }
+    return str;
   }
-};
+}
+
+if (typeof window !== "undefined") {
+  window.asyncReplace = asyncReplace;
+} else if (typeof module !== "undefined") {
+  module.exports = asyncReplace;
+} else {
+  throw new Error("asyncReplace is not supported in this environment");
+}

@@ -1,14 +1,14 @@
 {
   "name": "@xogumon/async-replace",
-  "version": "1.0.0",
-  "description": "it's like \"string\".replace() with promises",
+  "version": "1.0.1",
+  "description": "It's useful for replacing text in a string with a promise that returns a string.",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xogumon/async-replace.git"
+    "test": "jest",
+    "minify": "uglifyjs --compress --mangle --output index.min.js index.js"
   },
   "keywords": [
     "async",
@@ -25,12 +25,20 @@
     "email": "ronis@xogum.net",
     "url": "https://github.com/xogumon"
   },
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xogumon/async-replace.git"
+  },
+  "homepage": "https://github.com/xogumon/async-replace#readme",
   "bugs": {
     "url": "https://github.com/xogumon/async-replace/issues"
   },
-  "homepage": "https://github.com/xogumon/async-replace#readme",
   "devDependencies": {
-    "jest": "^29.0.1"
-  }
+    "jest": "^29.0.1",
+    "uglify-js": "^3.17.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "license": "MIT"
 }
