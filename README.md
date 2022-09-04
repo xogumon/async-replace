@@ -94,13 +94,13 @@ npm test # or yarn test
 </script>
 ```
 
-## Test (Browser)
+## Test (browser)
 
 You can test this package online in [JSFiddle](https://jsfiddle.net/xogum/sm4709hz/).
 
 ## CDNs (for browsers)
 
-You can use this package in your browser using [unpkg](https://unpkg.com/@xogumon/async-replace/index.min.js) or [jsdelivr](https://www.jsdelivr.com/package/npm/@xogumon/async-replace) cdn services.
+You can use this package in your browser using [unpkg](https://unpkg.com/browse/@xogumon/async-replace/) or [jsdelivr](https://www.jsdelivr.com/package/npm/@xogumon/async-replace) cdn services.
 
 ```html
 <script src="https://unpkg.com/@xogumon/async-replace/index.min.js"></script>
