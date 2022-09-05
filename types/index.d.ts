@@ -1,9 +1,13 @@
 export = asyncReplace;
 declare function asyncReplace(
-  str: string,
-  obj: {
-    search: number | string | RegExp;
-    replace: string | Function | Promise<string | Function>;
-  }[],
-  debug?: boolean
+	string: string,
+	replacers: {
+		search: number | string | RegExp;
+		replace: any;
+		flags?: string;
+	}[],
+	options?: {
+		debug?: boolean;
+		flags?: string;
+	}
 ): Promise<string>;

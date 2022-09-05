@@ -1,66 +1,47 @@
-async function asyncReplace(str, obj, debug = false) {
-  function debugLog({ message, value }, level = "log") {
-    if (debug && typeof debug === "boolean" && console[level]) {
-      console[level](`[async-replace] ${message}: ${value}`);
-    }
-  }
-  try {
-    if (typeof str !== "string")
-      throw new Error("First argument must be a string");
-    if (obj !== null && !Array.isArray(obj) && typeof obj === "object") {
-      const { search, replace } = obj;
-      const matches = [];
-      const regex = new RegExp(search);
-      str.replace(regex, (...values) => {
-        matches.push({
-          match: values[0],
-          values,
-        });
-        return values[0];
-      });
-      if (matches.length === 0) {
-        debugLog({
-          message: "No matches found",
-          value: search,
-        });
-      }
-      for (const match of matches) {
-        const { match: matched, values } = match;
-        const replaceValue =
-          typeof replace === "function"
-            ? await replace(...values)
-            : replace instanceof Promise
-            ? await replace
-            : replace;
-        str = str.replace(matched, replaceValue);
-        debugLog({ message: "Match found", value: matched });
-        debugLog({ message: "Replace value", value: replaceValue });
-      }
-      return str;
-    } else if (Array.isArray(obj)) {
-      for (const replacements of obj) {
-        str = await asyncReplace(str, replacements);
-      }
-      return str;
-    } else {
-      throw new Error(
-        "Second argument must be an object or an array of objects"
-      );
-    }
-  } catch (e) {
-    if (e instanceof Error) {
-      debugLog({ message: "Error", value: e.message }, "error");
-    } else {
-      debugLog({ message: "Error", value: e }, "error");
-    }
-    return str;
-  }
+async function asyncReplace(string, replacers, options) {
+	const opts = Object.assign({}, { debug: !1, flags: void 0 }, options);
+	const regexEscape = (s) => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+	const debug = (l, t, m) => {
+		opts.debug && console[l] && console[l](`[async-replace] ${t}:`, m instanceof Error ? m.message : m);
+	};
+	try {
+		if (typeof string !== "string") throw new Error('"string" must be a string');
+		if (typeof replacers !== "object") throw new Error('"replacers" must be an object');
+		if (replacers !== null && !Array.isArray(replacers)) {
+			const { search, replace, flags } = replacers;
+			const matches = [];
+			string.replace(
+				search instanceof RegExp ? search : new RegExp(regexEscape(search), flags || opts.flags),
+				(...args) => {
+					matches.push({ match: args[0], values: args });
+				}
+			);
+			if (matches.length === 0) debug("info", "Match", "No matches found");
+			for (const { match, values } of matches) {
+				const replaceValue =
+					typeof replace === "function"
+						? await replace(...values)
+						: replace instanceof Promise
+						? await replace
+						: replace;
+				debug("info", "Replace", `Replacing ${match} with ${replaceValue}`);
+				string = string.replace(match, replaceValue);
+			}
+		} else if (Array.isArray(replacers)) {
+			for (const replacements of replacers) {
+				string = await asyncReplace(string, replacements);
+			}
+		}
+	} catch (error) {
+		debug("error", "Error", error);
+	}
+	return string;
 }
 
 if (typeof window !== "undefined") {
-  window.asyncReplace = asyncReplace;
+	window.asyncReplace = asyncReplace;
 } else if (typeof module !== "undefined") {
-  module.exports = asyncReplace;
+	module.exports = asyncReplace;
 } else {
-  throw new Error("This environment is not supported");
+	throw new Error("This environment is not supported");
 }

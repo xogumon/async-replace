@@ -1,4 +1,4 @@
-const asyncReplace = require("./index.js");
+const asyncReplace = require("../index.js");
 
 describe("Replacement object: search is a string", () => {
   it("should replace with a string", async () => {
@@ -132,7 +132,6 @@ describe("Replacement object: search is a RegExp", () => {
     const result = await asyncReplace("Hello, world! Hellx, universe!", {
       search: /Hell([a-z]+)/g,
       replace: (match, capture1) => {
-        console.log(capture1);
         return Promise.resolve(match.toUpperCase() + "_" + capture1);
       },
     });
