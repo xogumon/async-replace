@@ -6,15 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-- Improved documentation and examples
+### Added
+
+- Improved documentation
 - Improved type definitions for TypeScript users
-- Removed unnecessary code from the build
-- Added `options` argument, instead `debug`.
-  - The `debug` option is still supported, now in `options.debug`.
-  - Into `options` argument, added `flags` option, to pass flags to non-regexp strings (like `i` for case-insensitive) globally.
-- Added support for `flags` option in `replacers` object. It's only supported for non-regexp strings. The global `flags` option is rewritten by this option.
-- Tests are moved to `tests` directory.
+- Added examples in the `examples` directory (module and script)
+- Added `options` argument, instead `debug` (`debug` is still supported, into `options`)
+- Added `options.flags` - Go to ([README](README.md)) to see the API details.
+- Added `replacers.flags` - Go to ([README](README.md)) to see the API details.
 - Added `tests` workflow to run tests on every push and pull request to verify that everything is working as expected.
+
+### Changed
+- Tests are moved to `tests` directory.
+- `debug` option is now in `options.debug`.
+- `replacers` option has your own `flags` property to set flags for non-regexp search.
+
+### Removed
+
+- A lot of unnecessary code.
+
+**Note:** The next release should be released in the next few days (I hope).
 
 ## [1.0.4] - 2022-09-03
 

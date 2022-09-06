@@ -1,12 +1,13 @@
 {
-  "include": ["./index.js"],
+  "include": [
+    "./index.js"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,
     "declarationMap": false,
-    "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "types",
+    "outDir": "build",
     "strict": true
   }
 }

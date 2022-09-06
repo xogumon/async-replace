@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@xogumon/async-replace</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container label {
+      font-size: 1.5rem;
+      display: block;
+    }
+
+    .container input {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+    }
+
+    .container input:focus {
+      outline: none;
+    }
+
+    .container textarea {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+    }
+
+    .container textarea:focus {
+      outline: none;
+    }
+
+    .container input,
+    .container textarea {
+      width: 100%;
+    }
+
+    .container button {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .container>.output {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>@xogumon/async-replace</h1>
+    <p>
+      This example not use async/await, but it's the same as the other example.
+    </p>
+    <p>
+      The JSON.stringify() method used in this example not accept a callback as valid JSON data, so it's not possible to
+      use async/await in this example.
+    </p>
+    <form>
+      <div class="input">
+        <label for="input">String</label>
+        <textarea id="input" cols="30" rows="10"></textarea>
+      </div>
+      <div class="replacers">
+        <label for="replacers">Replacers</label>
+        <textarea id="replacers" cols="30" rows="10"></textarea>
+      </div>
+      <button type="submit">Replace</button>
+    </form>
+    <div class="output">
+      <label for="output">Output</label>
+      <textarea id="output" cols="30" rows="10"></textarea>
+    </div>
+  </div>
+  <script defer src="../index.min.js"></script>
+  <script>
+    String.prototype.asyncReplace = function (args) {
+      return asyncReplace(this.toString(), args, { debug: true });
+    };
+    const form = document.querySelector("form");
+    const input = document.querySelector("#input");
+    const replacers = document.querySelector("#replacers");
+    const output = document.querySelector("#output");
+    input.value = "Hello, world!";
+    replacers.value = JSON.stringify(
+      [
+        {
+          search: "world",
+          replace: "Xogum",
+        },
+      ],
+      null,
+      2
+    );
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      output.value = await input.value.asyncReplace(JSON.parse(replacers.value));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@xogumon/async-replace</title>
+	<style>
+		body {
+			font-family: sans-serif;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.container label {
+			font-size: 1.5rem;
+			display: block;
+		}
+
+		.container input {
+			font-size: 1.5rem;
+			padding: 0.5rem;
+		}
+
+		.container input:focus {
+			outline: none;
+		}
+
+		.container textarea {
+			font-size: 1.5rem;
+			padding: 0.5rem;
+		}
+
+		.container textarea:focus {
+			outline: none;
+		}
+
+		.container input,
+		.container textarea {
+			width: 100%;
+		}
+
+		.container button {
+			font-size: 1.5rem;
+			padding: 0.5rem;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			cursor: pointer;
+		}
+
+		.container>.output {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>@xogumon/async-replace</h1>
+		<p>This is the async version of the example.</p>
+		<p>It will search for the word in the Search input and add the Replace API result before the word.</p>
+		<p>To try another word, just type it at the end of Replace API url and click the button Replace.</p>
+		<form>
+			<div class="input">
+				<label for="input">String</label>
+				<textarea id="input" cols="30" rows="10"></textarea>
+			</div>
+			<div class="search">
+				<label for="search">Search</label>
+				<input id="search" type="text" />
+			</div>
+			<div class="replace-api">
+				<label for="replace-api">Replace API</label>
+				<input id="replace-api" type="text" />
+			</div>
+			<button type="submit">Replace</button>
+		</form>
+		<div class="output">
+			<label for="output">Output</label>
+			<textarea id="output" cols="30" rows="10"></textarea>
+		</div>
+	</div>
+	<script defer src="../index.js"></script>
+	<script>
+		String.prototype.asyncReplace = function (args) {
+			const string = this.toString();
+			return asyncReplace(string, args, { debug: true });
+		};
+		const form = document.querySelector("form");
+		const input = document.querySelector("#input");
+		const search = document.querySelector("#search");
+		const replaceApi = document.querySelector("#replace-api");
+		const output = document.querySelector("#output");
+		input.value = "Hello, this is a test string. It has a lot of words in it. I'm going to replace some of them.";
+		search.value = "test";
+		replaceApi.value = "https://xog.npkn.net/no6ovprvdq/";
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const result = await input.value.asyncReplace({
+				search: search.value,
+				replace: async (match) => {
+					const response = await fetch(replaceApi.value).then((res) => {
+						if (res.headers.get("content-type").includes("application/json")) {
+							return res.json();
+						} else {
+							return res.text();
+						}
+					}).then((data) => {
+						return data;
+					}).catch((e) => {
+						return e;
+					});
+					return `${response} ${match}`;
+				},
+			});
+			output.value = result;
+		});
+	</script>
+</body>
+
+</html>
