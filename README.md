@@ -7,7 +7,6 @@ Asynchronous string replace function for Node.js and browsers (with support for 
 This module provides a function that is similar to `String.prototype.replace` but works asynchronously.
 
 - [Motivation](#motivation)
-- [API](#api)
 - [Installation](#installation)
 - [Usage (Node.js)](#usage-nodejs)
 - [Usage (Browser)](#usage-browser)
@@ -23,59 +22,57 @@ This module provides a function that is similar to `String.prototype.replace` bu
 
 I was working on a project that needed to replace some strings in a text file asynchronously and I didn't find any package that could do this without needing to call the function for each replacement (different results) on the same string, so I decided to create this package.
 
-## API
+## API - `asyncReplace(string, replacers, options)`
 
-### asyncReplace(`string`, `replacers`, `options`)
+### string (required)
 
-#### `string` (required)
+- Type: `string`
 
-Type: `string`
+- The string to replace.
 
-The string to replace.
+### replacers (required)
 
-#### `replacers` (required)
+- Type: `Array` | `Object`
 
-Type: `Array` or `Object`
+- The `replacers` argument can be an array of objects or a single object.
 
-The `replacers` argument can be an array of objects or a single object.
+#### replacers.search (required)
 
-##### `replacers.search` (required)
+- Type: `string` or `RegExp`
 
-Type: `string` or `RegExp`
+- The string or regular expression to search for.
 
-The string or regular expression to search for.
+#### replacers.replace (required)
 
-##### `replacers.replace` (required)
+- Type: `any`
 
-Type: `number`, `string`, `function`, `Promise`, or `async function`
+- The value to replace the `replacers.search` with.
 
-The value to replace the `replacers.search` with.
+#### replacers.flags (optional)
 
-##### `replacers.flags` (optional)
+- Type: `string`
 
-Type: `string`
-
-The flags to use with the `replacers.search` string (not used if `replacers.search` is a `RegExp`).
+- The flags to use with the `replacers.search` string (not used if `replacers.search` is a `RegExp`).
 
 - The flags are the same as the flags used in the `RegExp` constructor. See [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) for more information.
 
-#### `options` (optional)
+### options (optional)
 
-Type: `Object`
+- Type: `Object`
 
-##### `options.flags` (optional)
+#### options.flags (optional)
 
-Type: `string`
+- Type: `string`
 
-The flags to use with the `replacers.search` string (not used if `replacers.search` is a `RegExp`).
+- The flags to use with the `replacers.search` string (not used if `replacers.search` is a `RegExp`).
 
 - If `replacers` object has a `replacers.flags` property, the `options.flags` are ignored for that object and the `replacers.flags` are used instead.
 
-##### `options.debug` (optional)
+#### options.debug (optional)
 
-Type: `boolean`
+- Type: `boolean`
 
-If `true`, the `asyncReplace` function will log debug messages to the console. Defaults to `false`.
+- If `true`, the `asyncReplace` function will log debug messages to the console. Defaults to `false`.
 
 ## Installation
 
