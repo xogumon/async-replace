@@ -25,8 +25,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - A lot of unnecessary code.
 
-**Note:** The next release should be released in the next few days (I hope).
-
 ## [1.0.4] - 2022-09-03
 
 ### Fixed
